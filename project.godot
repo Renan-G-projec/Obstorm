@@ -30,6 +30,10 @@ window/stretch/aspect="expand"
 
 project/assembly_name="Obstorm"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
