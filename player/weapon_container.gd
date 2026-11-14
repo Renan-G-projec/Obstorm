@@ -3,6 +3,14 @@ extends Node2D
 
 @onready var current_weapon: Node2D = get_child(0) as Node2D
 
+
+func _ready() -> void:
+	var tween: Tween = create_tween().set_loops().set_trans(Tween.TRANS_QUAD)
+	tween.tween_property($Laser, "color", Color.CYAN, 1.0)
+	tween.tween_property($Laser, "color", Color.PURPLE, 1.0)
+	tween.tween_property($Laser, "color", Color.GREEN_YELLOW, 1.0)
+	tween.tween_property($Laser, "color", Color.YELLOW, 1.0)
+
 func change_weapon(weapon: Node2D) -> void:
 	if current_weapon:
 		current_weapon.queue_free()

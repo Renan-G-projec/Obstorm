@@ -36,6 +36,7 @@ shape = SubResource("RectangleShape2D_ocxxs")
 script = ExtResource("3_qjkh3")
 
 [node name="Laser" parent="WeaponContainer" unique_id=272144942 instance=ExtResource("4_g6k8r")]
+damage = 5.0
 
 [node name="FeelComponent" type="Node" parent="." unique_id=908566478 node_paths=PackedStringArray("sprite")]
 script = ExtResource("3_yw30f")

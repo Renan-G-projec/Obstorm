@@ -8,7 +8,10 @@ const JUMP_VELOCITY = -400.0
 
 @onready var feel_component: FeelComponent = $FeelComponent
 
-var _was_on_floor
+var _was_on_floor: bool = false
+
+func _ready() -> void:
+	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():

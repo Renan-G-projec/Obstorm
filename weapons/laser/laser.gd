@@ -3,6 +3,7 @@
 class_name Laser
 extends RayCast2D
 
+@export var damage: float = 5
 @export var color: Color = Color(0.0, 0.776, 0.82, 1.0): set = _on_color_changed
 @export var casting: bool = true: set = _on_casting_changed
 @export var laser_max_length: float = 720
@@ -13,7 +14,10 @@ extends RayCast2D
 		angle = val
 		target_position = (Vector2.RIGHT * laser_max_length).rotated(angle);
 		%Line2D.set_point_position(1, (Vector2.RIGHT * laser_length).rotated(angle))
-		
+
+@onready var damage_rate_timer: Timer = $DamageRateTimer
+
+var _chain_invencible: bool = false
 var _fade_tween: Tween
 
 func _on_color_changed(new_color: Color) -> void:
@@ -63,3 +67,21 @@ func _physics_process(delta: float) -> void:
 		laser_length = (global_position - get_collision_point()).length()
 		$CPUParticles2D.emitting = true
 		$CPUParticles2D.direction = get_collision_normal()
+		
+		cause_damage_to_chain()
+
+func cause_damage_to_chain() -> void:
+	if _chain_invencible: return
+	
+	var collider: Node = get_collider() as Node
+	if !collider: return
+	
+	var health_component: HealthComponent = collider.get_node_or_null("HealthComponent") as HealthComponent
+	if health_component: 
+		health_component.take_damage(damage)
+		damage_rate_timer.start()
+		_chain_invencible = true
+
+
+func _on_damage_rate_timer_timeout() -> void:
+	_chain_invencible = false

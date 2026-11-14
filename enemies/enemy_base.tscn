@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://v8vy0ra8xoat" path="res://enemies/enemy_base.gd" id="1_6dmn1"]
 [ext_resource type="Texture2D" uid="uid://blk4sxfpnewp3" path="res://icon.svg" id="1_tllp7"]
+[ext_resource type="Script" uid="uid://di06m40oyhjyo" path="res://components/health_component.gd" id="3_s7wk4"]
+[ext_resource type="Script" uid="uid://dlu56txne0a1t" path="res://components/feel_component.gd" id="4_q0ggh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ocxxs"]
 size = Vector2(14, 14)
@@ -29,5 +31,16 @@ unique_name_in_owner = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=309198262]
 shape = SubResource("CircleShape2D_ocxxs")
 
+[node name="HealthComponent" type="Node" parent="." unique_id=1089536697]
+script = ExtResource("3_s7wk4")
+metadata/_custom_type_script = "uid://di06m40oyhjyo"
+
+[node name="FeelComponent" type="Node" parent="." unique_id=2076627929 node_paths=PackedStringArray("sprite")]
+script = ExtResource("4_q0ggh")
+sprite = NodePath("../Sprite2D")
+metadata/_custom_type_script = "uid://dlu56txne0a1t"
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="took_damage" from="HealthComponent" to="." method="_on_health_component_took_damage"]

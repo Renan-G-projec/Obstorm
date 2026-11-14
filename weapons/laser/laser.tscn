@@ -6,6 +6,7 @@
 modulate = Color(0, 0.776, 0.82, 1)
 target_position = Vector2(160, 0)
 script = ExtResource("1_b2cb0")
+damage = null
 laser_length = 720.0
 
 [node name="Line2D" type="Line2D" parent="." unique_id=1386756675]
@@ -30,3 +31,9 @@ initial_velocity_min = 70.0
 initial_velocity_max = 130.0
 linear_accel_min = -5.0
 linear_accel_max = -5.0
+
+[node name="DamageRateTimer" type="Timer" parent="." unique_id=1241116401]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="DamageRateTimer" to="." method="_on_damage_rate_timer_timeout"]

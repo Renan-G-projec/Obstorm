@@ -25,14 +25,13 @@ extends Node
 		
 signal max_life_changed(new_max_life: float)
 signal life_changed(new_life: float)
-signal took_damage(damage: float, source_position: Vector2)
+signal took_damage(damage: float)
 signal died()
 
 
-func take_damage(damage: float, attacker: Node2D) -> void:
+func take_damage(damage: float) -> void:
 	life -= damage
-	var source_postiton: Vector2 = attacker.global_position
-	took_damage.emit(character, damage, source_postiton)
+	took_damage.emit(damage)
 
 func die() -> void:
 	life = -1.0

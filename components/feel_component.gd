@@ -8,7 +8,7 @@ var _hit_tween: Tween
 var _squash_tween: Tween
 
 # If no sprite is provided, changes all the parent modulate
-func hit_animation(sprite: Node2D = null, time: float = 0.1) -> void:
+func hit_animation(time: float = 0.1) -> void:
 	if _hit_tween:
 		_hit_tween.kill()
 	if !sprite:

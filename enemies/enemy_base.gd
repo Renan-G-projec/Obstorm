@@ -38,3 +38,11 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body is Player:
 		_following = true
+
+
+func _on_health_component_took_damage(damage: float) -> void:
+	$FeelComponent.squash_animation(Vector2(0.8, 1.2), 0.3)
+	$FeelComponent.hit_animation(0.3)
+
+func _on_health_component_died() -> void:
+	queue_free()
