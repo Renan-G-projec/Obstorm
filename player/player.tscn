@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://ckq0faud4p8ym"]
+
+[ext_resource type="Script" uid="uid://knic7hm8m0v4" path="res://player/player.gd" id="1_g1dw6"]
+[ext_resource type="Texture2D" uid="uid://blk4sxfpnewp3" path="res://icon.svg" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://dlu56txne0a1t" path="res://components/feel_component.gd" id="3_yw30f"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ocxxs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_oul6g")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocxxs"]
+size = Vector2(14, 14)
+
+[node name="Player" type="CharacterBody2D" unique_id=192621853]
+script = ExtResource("1_g1dw6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=224424490]
+position = Vector2(0, 7)
+sprite_frames = SubResource("SpriteFrames_ocxxs")
+offset = Vector2(0, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1125319897]
+shape = SubResource("RectangleShape2D_ocxxs")
+
+[node name="FeelComponent" type="Node" parent="." unique_id=908566478 node_paths=PackedStringArray("sprite")]
+script = ExtResource("3_yw30f")
+sprite = NodePath("../AnimatedSprite2D")
+metadata/_custom_type_script = "uid://dlu56txne0a1t"
