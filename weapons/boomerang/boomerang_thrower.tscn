@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ljwifx8u5jlr"]
+
+[ext_resource type="Script" uid="uid://bbs1lf182gey0" path="res://weapons/boomerang/boomerang_thrower.gd" id="1_ascdu"]
+[ext_resource type="PackedScene" uid="uid://tpiidfl5w01f" path="res://weapons/boomerang/boomerang_projectile.tscn" id="2_n3knx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocxxs"]
+
+[node name="BoomerangThrower" type="Area2D" unique_id=887712909]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_ascdu")
+projectile_scene = ExtResource("2_n3knx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1151921567]
+shape = SubResource("RectangleShape2D_ocxxs")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

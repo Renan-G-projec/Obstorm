@@ -96,15 +96,17 @@ func _physics_process(delta: float) -> void:
 		
 		_was_hitting_enemy = true
 
-func _cause_damage_to_chain(chain: Array[EnemyBase]) -> void:
+func _cause_damage_to_chain(chain: Array[EnemyBase], damage_reducer: float = 0.25) -> void:
 	if _chain_invencible: return
 	_chain_invencible = true
 	damage_rate_timer.start()
 	
+	var damage_to_cause: float = damage
 	for collider in chain:
 		var health_component: HealthComponent = collider.get_node_or_null("HealthComponent") as HealthComponent
 		if health_component: 
-			health_component.take_damage(damage)
+			health_component.take_damage(damage_to_cause)
+			damage_to_cause *= damage_reducer
 
 func _find_nearest_enemy(enemy: EnemyBase, radius: float) -> EnemyBase:
 	var circle := CircleShape2D.new()

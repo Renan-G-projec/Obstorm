@@ -12,6 +12,7 @@ size = Vector2(14, 14)
 radius = 64.03124
 
 [node name="EnemyBase" type="CharacterBody2D" unique_id=1526101963]
+collision_layer = 4
 script = ExtResource("1_6dmn1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1991956312]

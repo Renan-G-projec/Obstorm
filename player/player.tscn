@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://blk4sxfpnewp3" path="res://icon.svg" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://7b0khjxwewyg" path="res://player/weapon_container.gd" id="3_qjkh3"]
 [ext_resource type="Script" uid="uid://dlu56txne0a1t" path="res://components/feel_component.gd" id="3_yw30f"]
-[ext_resource type="PackedScene" uid="uid://dterwxe4jk6mv" path="res://weapons/laser/laser.tscn" id="4_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://ljwifx8u5jlr" path="res://weapons/boomerang/boomerang_thrower.tscn" id="6_boad6"]
 [ext_resource type="Script" uid="uid://di06m40oyhjyo" path="res://components/health_component.gd" id="6_g6k8r"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ocxxs"]
@@ -22,6 +22,7 @@ animations = [{
 size = Vector2(14, 14)
 
 [node name="Player" type="CharacterBody2D" unique_id=192621853]
+collision_layer = 2
 script = ExtResource("1_g1dw6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=224424490]
@@ -35,8 +36,7 @@ shape = SubResource("RectangleShape2D_ocxxs")
 [node name="WeaponContainer" type="Node2D" parent="." unique_id=584198870]
 script = ExtResource("3_qjkh3")
 
-[node name="Laser" parent="WeaponContainer" unique_id=272144942 instance=ExtResource("4_g6k8r")]
-damage = 5.0
+[node name="BoomerangThrower" parent="WeaponContainer" unique_id=887712909 instance=ExtResource("6_boad6")]
 
 [node name="FeelComponent" type="Node" parent="." unique_id=908566478 node_paths=PackedStringArray("sprite")]
 script = ExtResource("3_yw30f")
