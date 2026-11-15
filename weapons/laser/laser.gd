@@ -19,9 +19,9 @@ extends RayCast2D
 
 @onready var damage_rate_timer: Timer = $DamageRateTimer
 
-var _chain_of_entities: Array[Node2D]
 var _chain_invencible: bool = false
 var _fade_tween: Tween
+var _was_hitting_enemy: bool = false # Control flag to optimize line2d syncs
 
 func _on_color_changed(new_color: Color) -> void:
 	color = new_color
@@ -46,26 +46,38 @@ func _on_laser_length_changed(new_length: float) -> void:
 	%Line2D.set_point_position(1, target_position.normalized() * new_length)
 
 func _fade_out() -> void:
-	_chain_of_entities.clear()
-	
 	if _fade_tween && _fade_tween.is_valid():
 		_fade_tween.kill()
 	_fade_tween = create_tween().set_trans(Tween.TRANS_QUAD)
 	
-	laser_length = laser_max_length
 	$CPUParticles2D.emitting = false
 	
-	_fade_tween.tween_property(%Line2D, "width", 0, 0.2)
+	var collider: EnemyBase = get_collider() as EnemyBase
+	if collider:
+		_sync_line_with_chain(_get_chain(collider))
+		
+	await _fade_tween.tween_property(%Line2D, "width", 0, 0.2).finished
+	laser_length = laser_max_length
 
 func _fade_in() -> void:
 	if _fade_tween && _fade_tween.is_valid():
 		_fade_tween.kill()
 	_fade_tween = create_tween().set_trans(Tween.TRANS_QUAD)
 	
+	var collider: EnemyBase = get_collider() as EnemyBase
+	if collider:
+		_sync_line_with_chain(_get_chain(collider))
 	await _fade_tween.tween_property(%Line2D, "width", laser_width, 0.2).finished
 	
 
 func _physics_process(delta: float) -> void:
+	if _was_hitting_enemy:
+		_was_hitting_enemy = false
+		
+		%Line2D.clear_points()
+		%Line2D.add_point(Vector2.ZERO)
+		%Line2D.add_point(target_position.normalized() * laser_length)
+	
 	if !is_colliding(): 
 		laser_length = laser_max_length
 		$CPUParticles2D.emitting = false
@@ -77,7 +89,12 @@ func _physics_process(delta: float) -> void:
 		var collider: EnemyBase = get_collider() as EnemyBase
 		if !collider: return
 		
-		_cause_damage_to_chain(_get_chain(collider))
+		
+		var chain: Array[EnemyBase] = _get_chain(collider)
+		_cause_damage_to_chain(chain)
+		_sync_line_with_chain(chain)
+		
+		_was_hitting_enemy = true
 
 func _cause_damage_to_chain(chain: Array[EnemyBase]) -> void:
 	if _chain_invencible: return
@@ -132,6 +149,13 @@ func _get_chain(enemy: EnemyBase, radius_reduce_factor: float = 0.5) -> Array[En
 		ret.append(nearest_enemy)
 	
 	return ret
+
+func _sync_line_with_chain(chain: Array[EnemyBase]) -> void:
+	%Line2D.clear_points()
+	%Line2D.add_point(Vector2.ZERO)
+	
+	for enemy: EnemyBase in chain:
+		%Line2D.add_point(to_local(enemy.global_position))
 
 func _on_damage_rate_timer_timeout() -> void:
 	_chain_invencible = false
