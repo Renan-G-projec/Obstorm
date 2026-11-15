@@ -85,4 +85,16 @@ tile_set = SubResource("TileSet_ocxxs")
 position = Vector2(218, 73)
 target = NodePath("../Player")
 
+[node name="EnemyBase2" parent="." unique_id=771026829 node_paths=PackedStringArray("target") instance=ExtResource("3_1bvp3")]
+position = Vector2(223, 214)
+target = NodePath("../Player")
+
+[node name="EnemyBase3" parent="." unique_id=660571200 node_paths=PackedStringArray("target") instance=ExtResource("3_1bvp3")]
+position = Vector2(137, 138)
+target = NodePath("../Player")
+
+[node name="EnemyBase4" parent="." unique_id=1987035181 node_paths=PackedStringArray("target") instance=ExtResource("3_1bvp3")]
+position = Vector2(351, 67)
+target = NodePath("../Player")
+
 [connection signal="changed" from="NavigationRegion2D/Map" to="." method="_on_map_changed"]

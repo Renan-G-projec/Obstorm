@@ -77,29 +77,34 @@ func _physics_process(delta: float) -> void:
 		var collider: EnemyBase = get_collider() as EnemyBase
 		if !collider: return
 		
-		cause_damage_to_chain(_get_chain(collider))
+		_cause_damage_to_chain(_get_chain(collider))
 
-func cause_damage_to_chain(chain: Array[EnemyBase]) -> void:
+func _cause_damage_to_chain(chain: Array[EnemyBase]) -> void:
 	if _chain_invencible: return
+	_chain_invencible = true
+	damage_rate_timer.start()
 	
 	for collider in chain:
 		var health_component: HealthComponent = collider.get_node_or_null("HealthComponent") as HealthComponent
 		if health_component: 
 			health_component.take_damage(damage)
-			damage_rate_timer.start()
-			_chain_invencible = true
 
 func _find_nearest_enemy(enemy: EnemyBase, radius: float) -> EnemyBase:
 	var circle := CircleShape2D.new()
 	circle.radius = radius
 	
 	var query := PhysicsShapeQueryParameters2D.new()
+	query.transform = Transform2D(0.0, enemy.global_position)
 	query.collide_with_areas = false
 	query.shape = circle
 	
-	var overlapping_bodies: Array[Node2D] = get_world_2d().direct_space_state.intersect_shape(query).reduce(func(accum: Array[Node2D], coll: Dictionary) -> Array[Node2D]: return accum + coll.collider)
 	
-	var enemies: Array[EnemyBase] = overlapping_bodies.filter(func(body: Node2D) -> bool: return body is EnemyBase && body != enemy)
+	var overlapping_bodies: Array[Dictionary] = get_world_2d().direct_space_state.intersect_shape(query)
+	var enemies: Array[EnemyBase] = []
+	# Enemy filter + self
+	for body in overlapping_bodies:
+		if body.collider is EnemyBase && body.collider != enemy: enemies.append(body.collider)
+	
 	if enemies.is_empty(): return null
 	
 	return enemies.reduce(
@@ -110,7 +115,7 @@ func _find_nearest_enemy(enemy: EnemyBase, radius: float) -> EnemyBase:
 	)
 
 func _get_chain(enemy: EnemyBase, radius_reduce_factor: float = 0.5) -> Array[EnemyBase]:
-	var ret: Array[EnemyBase] = []
+	var ret: Array[EnemyBase] = [enemy]
 	
 	var enemy_search_radius: float = 80.0
 	var nearest_enemy: EnemyBase = _find_nearest_enemy(enemy, enemy_search_radius)
