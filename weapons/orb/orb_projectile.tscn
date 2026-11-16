@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://8tb2aqn5wetf"]
+
+[ext_resource type="Script" uid="uid://bvgijiv3q0u3g" path="res://weapons/orb/orb_projectile.gd" id="1_7p6qw"]
+[ext_resource type="Texture2D" uid="uid://blk4sxfpnewp3" path="res://icon.svg" id="1_oryu6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7x07u"]
+radius = 8.0
+
+[node name="OrbProjectile" type="StaticBody2D" unique_id=1292528733]
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_7p6qw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1974862886]
+texture = ExtResource("1_oryu6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=605053819]
+shape = SubResource("CircleShape2D_7x07u")
+
+[node name="Lifetime" type="Timer" parent="." unique_id=476827596]
+wait_time = 8.0
+
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

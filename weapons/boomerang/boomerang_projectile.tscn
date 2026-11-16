@@ -13,11 +13,12 @@ radius = 11.0
 collision_layer = 8
 script = ExtResource("1_1ib30")
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1200987609]
+modulate = Color(0.36862746, 0.38039216, 0.45882353, 1)
+texture = ExtResource("1_2pclf")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1174353965]
 shape = SubResource("RectangleShape2D_ocxxs")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1200987609]
-texture = ExtResource("1_2pclf")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=466080050]
 collision_layer = 0

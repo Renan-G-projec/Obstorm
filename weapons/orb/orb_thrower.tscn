@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bscomwnd5tuqf"]
+
+[ext_resource type="Script" uid="uid://hwsr6tkw8wi7" path="res://weapons/orb/orb_thrower.gd" id="1_vw4kp"]
+[ext_resource type="PackedScene" uid="uid://8tb2aqn5wetf" path="res://weapons/orb/orb_projectile.tscn" id="2_i3ppf"]
+
+[node name="OrbThrower" type="Node2D" unique_id=1158714086]
+script = ExtResource("1_vw4kp")
+projectile = ExtResource("2_i3ppf")
+
+[node name="Firerate" type="Timer" parent="." unique_id=926185174]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="timeout" from="Firerate" to="." method="_on_firerate_timeout"]
