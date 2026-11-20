@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://blk4sxfpnewp3" path="res://icon.svg" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://7b0khjxwewyg" path="res://player/weapon_container.gd" id="3_qjkh3"]
 [ext_resource type="Script" uid="uid://dlu56txne0a1t" path="res://components/feel_component.gd" id="3_yw30f"]
-[ext_resource type="PackedScene" uid="uid://bscomwnd5tuqf" path="res://weapons/orb/orb_thrower.tscn" id="4_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://dterwxe4jk6mv" path="res://weapons/laser/laser.tscn" id="4_g6k8r"]
 [ext_resource type="Script" uid="uid://di06m40oyhjyo" path="res://components/health_component.gd" id="6_g6k8r"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ocxxs"]
@@ -36,7 +36,7 @@ shape = SubResource("RectangleShape2D_ocxxs")
 [node name="WeaponContainer" type="Node2D" parent="." unique_id=584198870]
 script = ExtResource("3_qjkh3")
 
-[node name="OrbThrower" parent="WeaponContainer" unique_id=1158714086 instance=ExtResource("4_g6k8r")]
+[node name="Laser" parent="WeaponContainer" unique_id=272144942 instance=ExtResource("4_g6k8r")]
 
 [node name="FeelComponent" type="Node" parent="." unique_id=908566478 node_paths=PackedStringArray("sprite")]
 script = ExtResource("3_yw30f")

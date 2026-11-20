@@ -9,12 +9,16 @@ var _following: bool = true
 
 func _ready() -> void:
 	var target_position_update_timer: Timer = Timer.new()
+	
 	target_position_update_timer.autostart = true
 	target_position_update_timer.wait_time = 0.3
-	target_position_update_timer.timeout.connect(func() -> void: %NavigationAgent2D.target_position = target.global_position)
+	target_position_update_timer.timeout.connect(func() -> void: if target: %NavigationAgent2D.target_position = target.global_position)
+	
 	add_child(target_position_update_timer)
 	
 	if %Area2D.get_overlapping_bodies().any(func(val: Node2D) -> bool: return val is Player):
+		_following = false
+	if !target:
 		_following = false
 
 func _physics_process(delta: float) -> void:

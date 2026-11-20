@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://dfqkdrchscmjh" path="res://main.gd" id="1_lquwl"]
 [ext_resource type="PackedScene" uid="uid://ckq0faud4p8ym" path="res://player/player.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://b4i3qabcc8kot" path="res://enemies/enemy_base.tscn" id="3_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://8tb2aqn5wetf" path="res://weapons/orb/orb_projectile.tscn" id="6_7mycd"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ocxxs"]
 vertices = PackedVector2Array(524, 164, 436, 164, 412, 156, 412, 116, 612, 12, 612, 212, 548, 212, 524, 204, 444, 284, 444, 244, 500, 276, 500, 316, 436, 204, 196, 244, 204, 204, 228, 156, 204, 164, 228, 116, 548, 252, 612, 252, 612, 276, 580, 316, 580, 332, 44, 340, 596, 332, 596, 340, 60, 332, 140, 316, 44, 332, 60, 316, 196, 284, 140, 276, 28, 276, 28, 252, 92, 252, 92, 212, 28, 212, 28, 12, 116, 164, 116, 204)
@@ -72,9 +71,6 @@ position = Vector2(320, 180)
 scale = Vector2(2, 2)
 texture = ExtResource("1_h2yge")
 
-[node name="Player" parent="." unique_id=192621853 instance=ExtResource("2_0xm2m")]
-position = Vector2(269, 113)
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=659596215]
 navigation_polygon = SubResource("NavigationPolygon_ocxxs")
 
@@ -83,7 +79,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAACAAIAAAAAAAEAAAACAAIAAAAAAAIAAAACAAI
 tile_set = SubResource("TileSet_ocxxs")
 
 [node name="EnemyBase" parent="." unique_id=1526101963 node_paths=PackedStringArray("target") instance=ExtResource("3_1bvp3")]
-position = Vector2(218, 73)
+position = Vector2(223, 30)
 target = NodePath("../Player")
 
 [node name="EnemyBase2" parent="." unique_id=771026829 node_paths=PackedStringArray("target") instance=ExtResource("3_1bvp3")]
@@ -98,10 +94,7 @@ target = NodePath("../Player")
 position = Vector2(351, 67)
 target = NodePath("../Player")
 
-[node name="OrbProjectile" parent="." unique_id=1292528733 instance=ExtResource("6_7mycd")]
-position = Vector2(67, 335)
-
-[node name="OrbProjectile2" parent="." unique_id=816454291 instance=ExtResource("6_7mycd")]
-position = Vector2(104, 318)
+[node name="Player" parent="." unique_id=192621853 instance=ExtResource("2_0xm2m")]
+position = Vector2(269, 113)
 
 [connection signal="changed" from="NavigationRegion2D/Map" to="." method="_on_map_changed"]

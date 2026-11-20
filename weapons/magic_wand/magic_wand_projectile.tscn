@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://hj186e7hkcuy"]
+
+[ext_resource type="Script" uid="uid://b0dh35yilneio" path="res://weapons/magic_wand/magic_wand_projectile.gd" id="1_78bst"]
+[ext_resource type="Texture2D" uid="uid://blk4sxfpnewp3" path="res://icon.svg" id="2_0s1rh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ocxxs"]
+radius = 7.0
+
+[node name="MagicWandProjectile" type="Area2D" unique_id=1998088745]
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_78bst")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1951567596]
+shape = SubResource("CircleShape2D_ocxxs")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1660085796]
+texture = ExtResource("2_0s1rh")
+region_enabled = true
+region_rect = Rect2(2, 3, 12, 11)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1630318349]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
