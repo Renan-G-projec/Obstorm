@@ -69,7 +69,7 @@ func get_chain(enemy_search_radius: float, radius_reduce_factor: float = 0.5, ch
 	if !nearest_enemy: return ret
 	ret.append(nearest_enemy)
 	
-	for enemy_index in range(1, chain_length):
+	for enemy_index in range(2, chain_length):
 		enemy_search_radius *= radius_reduce_factor
 		
 		nearest_enemy = nearest_enemy._find_nearest_enemy(enemy_search_radius, ret)

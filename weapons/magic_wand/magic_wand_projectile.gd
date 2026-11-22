@@ -19,7 +19,10 @@ static var type_data: Dictionary[Type, Dictionary] = {
 	Type.ELETRIC: {
 		"modulate": Color(0.031, 0.353, 0.467, 1.0),
 		"damage": 12.0,
-		"paralisys_chance": 0.25
+		"chain_damage": 6.0,
+		"paralisys_chance": 0.25,
+		"max_chain_length": 3,
+		"chain_search_radius": 64
 	}
 } 
 
@@ -77,6 +80,26 @@ func _hit_behavior(enemy: EnemyBase) -> void:
 			
 			if burning_component:
 				burning_component.apply_burning(time)
+		
+		Type.ELETRIC:
+			var enemy_chain_length: int = type_data[type].max_chain_length
+			var enemy_search_radius: float = type_data[type].chain_search_radius
+			var damage: float = type_data[type].damage
+			var chain_damage: float = type_data[type].chain_damage
+			
+			var enemies: Array[EnemyBase] = enemy.get_chain(enemy_search_radius, 0.0, enemy_chain_length)
+			
+			var first_enemy: EnemyBase = enemies.pop_front()
+			var health_component: HealthComponent = first_enemy.get_node_or_null("HealthComponent") as HealthComponent
+			
+			if health_component:
+				health_component.take_damage(damage)
+			
+			for enemy_on_chain in enemies:
+				var enemy_on_chain_health_component: HealthComponent = enemy_on_chain.get_node_or_null("HealthComponent") as HealthComponent
+				if enemy_on_chain_health_component:
+					enemy_on_chain_health_component.take_damage(chain_damage)
+			
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is EnemyBase:
