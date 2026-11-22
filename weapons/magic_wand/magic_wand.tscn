@@ -7,7 +7,6 @@
 [node name="MagicWand" type="Node2D" unique_id=47916352]
 script = ExtResource("1_yg7ig")
 projectile = ExtResource("2_x4ek8")
-projectile_type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1057221942]
 texture = ExtResource("1_q4j36")

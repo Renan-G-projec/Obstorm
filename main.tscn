@@ -55,7 +55,7 @@ physics_layer_0/collision_layer = 1
 navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_0xm2m")
 
-[node name="Main" type="Node" unique_id=679083051]
+[node name="Main" type="CanvasLayer" unique_id=102276458]
 script = ExtResource("1_lquwl")
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=1668047432]
@@ -98,6 +98,7 @@ target = NodePath("../Player")
 position = Vector2(269, 113)
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=1449463901]
+layer = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="GUI" unique_id=334901589]
 anchors_preset = 15
@@ -116,5 +117,4 @@ layout_mode = 2
 bbcode_enabled = true
 text = "Score: [color=cyan]%d[/color]"
 
-[connection signal="changed" from="NavigationRegion2D/Map" to="." method="_on_map_changed"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]

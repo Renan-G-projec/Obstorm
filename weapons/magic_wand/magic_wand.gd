@@ -23,4 +23,4 @@ func shoot() -> void:
 	projectile_instance.direction = Vector2.RIGHT.rotated(global_rotation)
 	projectile_instance.global_position = $Marker2D.global_position
 	
-	get_tree().root.add_child(projectile_instance)
+	get_tree().current_scene.add_child(projectile_instance)

@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 
 TransitionManager="*uid://bo7tbrosbm4dh"
 ScoreSystem="*uid://dygyrmh8syppl"
+Preferences="*uid://dl4j8n1q34rw"
 
 [display]
 
