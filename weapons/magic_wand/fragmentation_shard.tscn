@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dy50xg6hq4tm1"]
+
+[ext_resource type="Texture2D" uid="uid://blk4sxfpnewp3" path="res://icon.svg" id="1_jo5fq"]
+[ext_resource type="Script" uid="uid://bk1vc1jj1ybe" path="res://weapons/magic_wand/fragmentation_shard.gd" id="1_u1eot"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocxxs"]
+size = Vector2(4, 4)
+
+[node name="FragmentationShard" type="Area2D" unique_id=2125950667]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_u1eot")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1988487093]
+texture = ExtResource("1_jo5fq")
+region_enabled = true
+region_rect = Rect2(6, 6, 4, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=762592131]
+shape = SubResource("RectangleShape2D_ocxxs")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1197055567]
+
+[node name="Lifetime" type="Timer" parent="." unique_id=1856605113]
+wait_time = 0.3
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

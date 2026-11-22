@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://blk4sxfpnewp3" path="res://icon.svg" id="1_q4j36"]
 [ext_resource type="Script" uid="uid://ikxjiyc6gkff" path="res://weapons/magic_wand/magic_wand.gd" id="1_yg7ig"]
 [ext_resource type="PackedScene" uid="uid://hj186e7hkcuy" path="res://weapons/magic_wand/magic_wand_projectile.tscn" id="2_x4ek8"]
-[ext_resource type="PackedScene" uid="uid://b4i3qabcc8kot" path="res://enemies/enemy_base.tscn" id="4_x8a1q"]
 
 [node name="MagicWand" type="Node2D" unique_id=47916352]
 script = ExtResource("1_yg7ig")
@@ -17,6 +16,3 @@ region_rect = Rect2(0, 7, 16, 4)
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1489922151]
 position = Vector2(16, 0)
-
-[node name="EnemyBase" parent="." unique_id=1526101963 instance=ExtResource("4_x8a1q")]
-position = Vector2(228, 253)
