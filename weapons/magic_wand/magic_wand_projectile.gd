@@ -14,8 +14,7 @@ static var type_data: Dictionary[Type, Dictionary] = {
 	Type.FIRE: {
 		"modulate": Color(0.417, 0.0, 0.0, 1.0),
 		"damage": 8.0,
-		"burning_dps": 2.0,
-		"burning_time": 1.5
+		"burning_time": 0.7
 	},
 	Type.ELETRIC: {
 		"modulate": Color(0.031, 0.353, 0.467, 1.0),
@@ -70,7 +69,14 @@ func _hit_behavior(enemy: EnemyBase) -> void:
 				projectile.speed = speed * 0.8
 				projectile.direction = direction_of_fragment
 				
-				get_tree().current_scene.add_child(projectile)
+				get_tree().current_scene.call_deferred("add_child", projectile)
+		
+		Type.FIRE:
+			var burning_component: BurningComponent = enemy.get_node_or_null("BurningComponent") as BurningComponent
+			var time: float = type_data[type].burning_time
+			
+			if burning_component:
+				burning_component.apply_burning(time)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is EnemyBase:
