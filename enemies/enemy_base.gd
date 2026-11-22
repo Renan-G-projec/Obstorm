@@ -4,8 +4,10 @@ extends CharacterBody2D
 
 @export var target: Node2D
 @export var speed: float = 40.0
+@export var score_on_death: float = 10.0
 
 var _following: bool = true
+signal died()
 
 func _ready() -> void:
 	var target_position_update_timer: Timer = Timer.new()
@@ -49,4 +51,5 @@ func _on_health_component_took_damage(damage: float) -> void:
 	$FeelComponent.hit_animation(0.3)
 
 func _on_health_component_died() -> void:
+	died.emit()
 	queue_free()

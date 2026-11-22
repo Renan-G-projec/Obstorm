@@ -46,3 +46,5 @@ metadata/_custom_type_script = "uid://dlu56txne0a1t"
 [node name="HealthComponent" type="Node" parent="." unique_id=821916713]
 script = ExtResource("6_g6k8r")
 metadata/_custom_type_script = "uid://di06m40oyhjyo"
+
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]

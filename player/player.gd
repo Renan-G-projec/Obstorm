@@ -10,6 +10,8 @@ const JUMP_VELOCITY = -400.0
 
 var _was_on_floor: bool = false
 
+signal died()
+
 func _ready() -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 
@@ -39,3 +41,7 @@ func _physics_process(delta: float) -> void:
 func jump(force: float) -> void:
 	velocity.y = force
 	feel_component.squash_animation(Vector2(1.25, 0.75), 0.4)
+
+
+func _on_health_component_died() -> void:
+	died.emit()

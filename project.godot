@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 TransitionManager="*uid://bo7tbrosbm4dh"
+ScoreSystem="*uid://dygyrmh8syppl"
 
 [display]
 
@@ -37,6 +38,10 @@ project/assembly_name="Obstorm"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+
+[global_group]
+
+enemies=""
 
 [input]
 
