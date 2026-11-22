@@ -54,7 +54,7 @@ func _fade_out() -> void:
 	
 	var collider: EnemyBase = get_collider() as EnemyBase
 	if collider:
-		_sync_line_with_chain(_get_chain(collider))
+		_sync_line_with_chain(collider.get_chain(80, 0.5, 3))
 		
 	await _fade_tween.tween_property(%Line2D, "width", 0, 0.2).finished
 	laser_length = laser_max_length
@@ -66,7 +66,7 @@ func _fade_in() -> void:
 	
 	var collider: EnemyBase = get_collider() as EnemyBase
 	if collider:
-		_sync_line_with_chain(_get_chain(collider))
+		_sync_line_with_chain(collider.get_chain(80, 0.5, 3))
 	await _fade_tween.tween_property(%Line2D, "width", laser_width, 0.2).finished
 	
 
@@ -90,7 +90,7 @@ func _physics_process(delta: float) -> void:
 		if !collider: return
 		
 		
-		var chain: Array[EnemyBase] = _get_chain(collider)
+		var chain: Array[EnemyBase] = collider.get_chain(80.0, 0.5, 3)
 		_cause_damage_to_chain(chain)
 		_sync_line_with_chain(chain)
 		
@@ -107,50 +107,6 @@ func _cause_damage_to_chain(chain: Array[EnemyBase], damage_reducer: float = 0.2
 		if health_component: 
 			health_component.take_damage(damage_to_cause)
 			damage_to_cause *= damage_reducer
-
-func _find_nearest_enemy(enemy: EnemyBase, radius: float) -> EnemyBase:
-	var circle := CircleShape2D.new()
-	circle.radius = radius
-	
-	var query := PhysicsShapeQueryParameters2D.new()
-	query.transform = Transform2D(0.0, enemy.global_position)
-	query.collide_with_areas = false
-	query.shape = circle
-	
-	
-	var overlapping_bodies: Array[Dictionary] = get_world_2d().direct_space_state.intersect_shape(query)
-	var enemies: Array[EnemyBase] = []
-	# Enemy filter + self
-	for body in overlapping_bodies:
-		if body.collider is EnemyBase && body.collider != enemy: enemies.append(body.collider)
-	
-	if enemies.is_empty(): return null
-	
-	return enemies.reduce(
-		func(nearest: EnemyBase, compared_enemy: EnemyBase) -> EnemyBase:
-			var nearest_dist: float = enemy.global_position.distance_squared_to(nearest.global_position)
-			var current_dist: float = enemy.global_position.distance_squared_to(compared_enemy.global_position)
-			return nearest if nearest_dist < current_dist else compared_enemy
-	)
-
-func _get_chain(enemy: EnemyBase, radius_reduce_factor: float = 0.5) -> Array[EnemyBase]:
-	var ret: Array[EnemyBase] = [enemy]
-	
-	var enemy_search_radius: float = 80.0
-	var nearest_enemy: EnemyBase = _find_nearest_enemy(enemy, enemy_search_radius)
-	
-	if !nearest_enemy: return ret
-	ret.append(nearest_enemy)
-	
-	for enemy_index in range(1, laser_bounce_quantity):
-		enemy_search_radius *= radius_reduce_factor
-		
-		nearest_enemy = _find_nearest_enemy(nearest_enemy, enemy_search_radius)
-		
-		if !nearest_enemy: return ret
-		ret.append(nearest_enemy)
-	
-	return ret
 
 func _sync_line_with_chain(chain: Array[EnemyBase]) -> void:
 	%Line2D.clear_points()

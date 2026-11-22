@@ -36,6 +36,49 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+func _find_nearest_enemy(radius: float, exclude_enemies: Array[EnemyBase]) -> EnemyBase:
+	var circle := CircleShape2D.new()
+	circle.radius = radius
+	
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.transform = Transform2D(0.0, global_position)
+	query.collide_with_areas = false
+	query.shape = circle
+	
+	
+	var overlapping_bodies: Array[Dictionary] = get_world_2d().direct_space_state.intersect_shape(query)
+	var enemies: Array[EnemyBase] = []
+	# Enemy filter + self
+	for body in overlapping_bodies:
+		if body.collider is EnemyBase && body.collider != self && !(body.collider in exclude_enemies): enemies.append(body.collider)
+	
+	if enemies.is_empty(): return null
+	
+	return enemies.reduce(
+		func(nearest: EnemyBase, compared_enemy: EnemyBase) -> EnemyBase:
+			var nearest_dist: float = global_position.distance_squared_to(nearest.global_position)
+			var current_dist: float = global_position.distance_squared_to(compared_enemy.global_position)
+			return nearest if nearest_dist < current_dist else compared_enemy
+	)
+
+func get_chain(enemy_search_radius: float, radius_reduce_factor: float = 0.5, chain_length: int = 3) -> Array[EnemyBase]:
+	var ret: Array[EnemyBase] = [self]
+
+	var nearest_enemy: EnemyBase = _find_nearest_enemy(enemy_search_radius, [self])
+	
+	if !nearest_enemy: return ret
+	ret.append(nearest_enemy)
+	
+	for enemy_index in range(1, chain_length):
+		enemy_search_radius *= radius_reduce_factor
+		
+		nearest_enemy = nearest_enemy._find_nearest_enemy(enemy_search_radius, ret)
+		
+		if !nearest_enemy: return ret
+		ret.append(nearest_enemy)
+	
+	return ret
+
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Player:
 		_following = false
